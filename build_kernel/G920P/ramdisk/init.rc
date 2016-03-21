@@ -14,6 +14,7 @@ import /init.carrier.rc
 import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
+import /init.SkyHigh.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -66,6 +67,7 @@ on init
 
     mkdir /.system
     mkdir /system
+    mkdir /su 0755 root root # create mount point for SuperSU
     mkdir /data 0771 system system
     mkdir /cache 0770 system cache
     mkdir /config 0500 root root
@@ -137,7 +139,7 @@ on init
     write /proc/sys/kernel/sched_compat_yield 1
     write /proc/sys/kernel/sched_child_runs_first 0
 
-    write /proc/sys/kernel/randomize_va_space 2
+    write /proc/sys/kernel/randomize_va_space 0
     write /proc/sys/kernel/kptr_restrict 2
     write /proc/sys/vm/mmap_min_addr 32768
     write /proc/sys/net/ipv4/ping_group_range "0 2147483647"
@@ -1015,9 +1017,6 @@ on boot
     chown system usb /sys/class/usb_notify/usb_control/disable
     chmod 0664 /sys/class/usb_notify/usb_control/disable
 
-    write /sys/block/mmcblk0/queue/scheduler noop
-    write /sys/block/sda/queue/scheduler noop
-
     copy /system/etc/battery_charging_temp.data /sys/class/power_supply/battery/batt_temp_table
 
     class_start core
@@ -1612,8 +1611,6 @@ service auditd /system/bin/auditd -k
     oneshot
 
 on property:sys.boot_completed=1
-    write /sys/block/mmcblk0/queue/scheduler cfq
-    write /sys/block/sda/queue/scheduler cfq
 	chown system system /sys/class/net/wlan0/queues/rx-0/rps_cpus
 
 # icd
@@ -1652,3 +1649,23 @@ on property:service.vpnclientd.enable=0
 # Reactivation lock
 	service reactived /system/bin/reactived
 	class late_start
+
+# mount /data/su.img to /su
+on property:sukernel.mount=1
+    mount ext4 loop@/data/su.img /su noatime
+
+# launch SuperSU daemon
+service daemonsu /sbin/launch_daemonsu.sh
+    class late_start
+    user root
+    seclabel u:r:init:s0
+    oneshot
+
+# Call Post-init script
+service SkyHigh-init /sbin/SkyHigh.sh
+    class main
+    user root
+    oneshot
+
+# SuperSU:PATCH:268
+# SuperSU:STOCK:1e0b7162d7f8b28e01afdba38361680af720386e

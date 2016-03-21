@@ -1,0 +1,8 @@
+on boot
+
+# Ensure some kernel boot defaults are set
+    # Set optimistic
+    write /proc/sys/net/ipv6/conf/all/optimistic_dad 1
+    write /proc/sys/net/ipv6/conf/all/use_optimistic 1
+    # Set UKSM CPU governor
+    write /sys/kernel/mm/uksm/cpu_governor low
