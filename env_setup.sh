@@ -93,7 +93,7 @@ export TMPFILE=`mktemp -t`;
 
 
 # system compiler : UBERTC 5.3.1 20160201 https://bitbucket.org/UBERTC/aarch64-linux-android-5.3-kernel
-export CROSS_COMPILE=/home/upintheair/aarch64-linux-android-5.3-kernel/bin/aarch64-linux-android-
+export CROSS_COMPILE=/home/buildserver/android/toolchains/UBERTC-aarch64-linux-android-5.3/bin/aarch64-linux-android-
 
 
 # CPU Core
