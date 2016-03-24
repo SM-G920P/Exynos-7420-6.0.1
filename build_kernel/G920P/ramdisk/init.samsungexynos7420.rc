@@ -3,7 +3,6 @@ import init.samsungexynos7420.usb.rc
 import init.wifi.rc
 import init.baseband.rc
 import init.carrier.rc
-import init.fac.rc
 import init.zeroflte_fac.rc
 
 on early-init
@@ -216,8 +215,8 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 75
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 85
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 85
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 19000

@@ -11,26 +11,26 @@ entropy)
   echo "$(cat /proc/sys/kernel/random/entropy_avail)"
   ;;
 batttype)
-  echo "Charge Type: $(cat /sys/devices/battery.54/power_supply/battery/charge_type)"
+  echo "Charge Type: $(cat /sys/devices/battery.53/power_supply/battery/charge_type)"
   ;;
 battcurrav)
-  echo "Current Average: $(cat /sys/devices/battery.54/power_supply/battery/current_avg) mA"
+  echo "Current Average: $(cat /sys/devices/battery.53/power_supply/battery/current_avg) mA"
   ;;
 battcurrnow)
-  echo "Current Now: $(cat /sys/devices/battery.54/power_supply/battery/current_now) mA"
+  echo "Current Now: $(cat /sys/devices/battery.53/power_supply/battery/current_now) mA"
   ;;
 battvoltnow)
-  echo "Voltage Now: $(($(cat /sys/devices/battery.54/power_supply/battery/voltage_now) /1000)) mV"
+  echo "Voltage Now: $(($(cat /sys/devices/battery.53/power_supply/battery/voltage_now) /1000)) mV"
   ;;
 batttemp)
-  echo "Temp: $(($(cat /sys/devices/battery.54/power_supply/battery/batt_temp) /10)) °C"
+  echo "Temp: $(($(cat /sys/devices/battery.53/power_supply/battery/batt_temp) /10)) °C"
   ;;
 battcapa)
-  echo "Capacity: $(cat /sys/devices/battery.54/power_supply/battery/capacity) %"
+  echo "Capacity: $(cat /sys/devices/battery.53/power_supply/battery/capacity) %"
   ;;
 battstatus)
-  TIME=$(cat /sys/devices/battery.54/power_supply/battery/time_to_full_now);
-  STATUS=$(cat /sys/devices/battery.54/power_supply/battery/status);
+  TIME=$(cat /sys/devices/battery.53/power_supply/battery/time_to_full_now);
+  STATUS=$(cat /sys/devices/battery.53/power_supply/battery/status);
 	if [ "$STATUS" == Charging ]; then
 		if [ "$TIME" == -1 ]; then
 			echo Status: $STATUS;
@@ -44,7 +44,7 @@ battstatus)
 	fi;
   ;;
 batthealth)
-  echo "Health: $(cat /sys/devices/battery.54/power_supply/battery/health)"
+  echo "Health: $(cat /sys/devices/battery.53/power_supply/battery/health)"
   ;;
 actual_brightness)
   echo "$(cat /sys/class/backlight/panel/actual_brightness)"
